@@ -1,6 +1,9 @@
 import PaymentsOptions from "../Enums/PaymentsOptions";
+import Card from "./Card";
 import "./Menu.css";
 import { useState } from "react"; //hooks
+import NetBanking from "./NetBanking";
+import UPI from "./UPI";
 
 const option = [
   PaymentsOptions.CARD,
@@ -30,7 +33,7 @@ const Menu = () => {
         (option === selectedOption ? " payment-option-selected" : "")
       }
       key={option}
-      onClick={() => setSelectionOption( option)}
+      onClick={() => setSelectionOption( option )}
     >
       {option}
     </button>
@@ -38,7 +41,11 @@ const Menu = () => {
   return (
     <div className="menu">
       <div className="payment-options">{buttons}</div>
-      <div className="payment-details"></div>
+      <div className="payment-details">
+        {selectedOption === PaymentsOptions.CARD && <Card />}
+        {selectedOption === PaymentsOptions.NETBANKING && <NetBanking />}
+        {selectedOption === PaymentsOptions.UPI && <UPI />}
+      </div>
     </div>
   );
 };
