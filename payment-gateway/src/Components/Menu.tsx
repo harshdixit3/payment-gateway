@@ -23,7 +23,7 @@ console.log(option);
 
 const Menu = () => {
   const [selectedOption, setSelectionOption] = useState(
-    PaymentsOptions.NETBANKING
+    PaymentsOptions.CARD
   );
 
   const buttons = option.map((option) => (
