@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { range } from "../utils";
+import ConfermationDialog from "./ConfermationDialog";
 
 const Card = () => {
   const [cardNumber, seCardNumber] = useState("");
@@ -7,13 +8,24 @@ const Card = () => {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [CVV, setCVV] = useState("");
-  
+
+  const [showConfermationDialog, setshowConfermationDialog] = useState(false);
+
   const date = new Date();
   const currentYear = date.getFullYear();
 
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setshowConfermationDialog(true);
+  };
+
+  const closeDialog = () => {
+    setshowConfermationDialog(false);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <table>
           <tbody>
             <tr>
@@ -81,8 +93,10 @@ const Card = () => {
                     onChange={(event) => setYear(event.target.value)}
                   >
                     <option value="">year</option>
-                    {range(currentYear , currentYear + 10).map(
-                      year => (<option value={year} key={year}>{year}</option>
+                    {range(currentYear, currentYear + 10).map((year) => (
+                      <option value={year} key={year}>
+                        {year}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -90,7 +104,7 @@ const Card = () => {
             </tr>
             <tr>
               <td>
-                <label htmlFor="cvv" >CVV Number : </label>
+                <label htmlFor="cvv">CVV Number : </label>
               </td>
               <td>
                 <input
@@ -104,12 +118,13 @@ const Card = () => {
             </tr>
             <tr>
               <td>
-                <button className="btn btn-pay" id="Submit">Pay</button>
+                <button className="btn btn-pay">Pay</button>
               </td>
             </tr>
           </tbody>
         </table>
       </form>
+      {showConfermationDialog && <ConfermationDialog onClickNo={closeDialog} />}
     </div>
   );
 };
