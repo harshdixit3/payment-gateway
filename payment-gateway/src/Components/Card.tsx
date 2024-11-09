@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { range } from "../utils";
 import ConfermationDialog from "./ConfermationDialog";
+import PaymentsOptions from "../Enums/PaymentsOptions";
 
 const Card = () => {
   const [cardNumber, seCardNumber] = useState("");
@@ -124,7 +125,12 @@ const Card = () => {
           </tbody>
         </table>
       </form>
-      {showConfermationDialog && <ConfermationDialog onClickNo={closeDialog} />}
+      {showConfermationDialog && (
+        <ConfermationDialog
+          onClickNo={closeDialog}
+          paymentOption={PaymentsOptions.CARD}
+        />
+      )}
     </div>
   );
 };
